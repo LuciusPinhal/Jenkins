@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     //criar credencial(autênticar) no Jenkis
-                    docker.withRegistry('docker push lucius28/api-produto:tagname', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                         dockerapp.push('latest')
                         dockerapp.push("${env.BUILD_ID}")
                     }
