@@ -16,12 +16,17 @@ pipeline {
                 }
             }
         }
-        stage ('simple-build') {
+        stage ('simple-tag') {
             steps {
                 dir("tag"){
-                    bat 'docker image tag api-produto:42 lucius28/api-produto'
+                    bat 'docker image tag api-produto:43 lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
                 }
+            }
+        }
+
+        stage ('simple-push') {
+            steps {
                 dir("push"){
                     bat 'docker image push lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
