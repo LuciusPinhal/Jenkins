@@ -10,29 +10,27 @@ pipeline {
             }
         }
 
-        stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-        stage ('Push Image') {
+         stages {
+        stage ('Test Image') {
             steps {
-
-				sh 'docker push api-produto:${env.BUILD_ID}'
-		
-                // script {
-                //     //criar credencial(autênticar) no Jenkis
-                //     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                //         dockerapp.push('latest')
-                //         dockerapp.push("${env.BUILD_ID}")
-                //     }
-                // }
+                dir("Teste"){
+                    bat 'docker image ls'
+                    echo 'Teste realizado com sucesso'
+                }
             }
         }
 
-	}
+        stage ('Push Image') {
+            steps {
+                script {
+                    //criar
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
 
         // stage ('Deploy Kubernetes') {
         //     environment {
