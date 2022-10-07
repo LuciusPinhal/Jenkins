@@ -19,20 +19,20 @@ pipeline {
         stage ('simple-tag') {
             steps {
                 dir("tag"){
-                    bat 'docker image tag api-produto:45 lucius28/api-produto'
+                    bat 'docker image tag api-produto:'${env.BUILD_ID}' lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
                 }
             }
         }
 
-        stage ('simple-push') {
-            steps {
-                dir("push"){
-                    bat 'docker image push lucius28/api-produto'
-                    echo 'Tag Realizada com sucesso'
-                }
-            }
-        }
+        // stage ('simple-push') {
+        //     steps {
+        //         dir("push"){
+        //             bat 'docker image push lucius28/api-produto'
+        //             echo 'Tag Realizada com sucesso'
+        //         }
+        //     }
+        // }
         stage ('Push Image no docker Hub') {
             steps {
                 script {
