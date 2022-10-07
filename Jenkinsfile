@@ -19,11 +19,11 @@ pipeline {
         stage ('simple-build') {
             steps {
                 dir("tag"){
-                    bat 'docker image tag api-produto lucius28/api-produtoPush'
+                    bat 'docker image tag api-produto:41 lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
                 }
                 dir("push"){
-                    bat 'docker image push lucius28/api-produtoPush'
+                    bat 'docker image push lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
                 }
             }
