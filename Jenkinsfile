@@ -20,8 +20,9 @@ pipeline {
         stage ('Test Run') {
             steps {
                 dir("run"){
-                    bat 'docker container run -p 80:80 api-produto:51'
+                    bat 'docker container run -p 80:80 api-produtos:52'
                     echo 'Teste realizado com sucesso'
+                     bat 'docker stop api-produtos:52'
                 }
             }
         }
