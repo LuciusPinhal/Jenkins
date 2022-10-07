@@ -16,22 +16,20 @@ pipeline {
                 }
             }
         }
-        stage ('simple-tag') {
-            steps {
-                dir("tag"){
-                    bat 'docker image tag api-produto:49 lucius28/api-produto'
-                    echo 'Tag Realizada com sucesso'
+        // stage ('simple-tag') {
+        //     steps {
+        //         dir("tag"){
+        //             bat 'docker image tag api-produto:49 lucius28/api-produto'
+        //             echo 'Tag Realizada com sucesso'
 
-                    bat 'docker image push lucius28/api-produto'
-                    echo 'Push Realizada com sucesso'
+        //             bat 'docker image push lucius28/api-produto'
+        //             echo 'Push Realizada com sucesso'
                 
-                }
-            }
-        }
-
-     
+        //         }
         //     }
         // }
+
+
         stage ('Push Image no docker Hub') {
             steps {
                 script {
