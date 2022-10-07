@@ -10,7 +10,6 @@ pipeline {
             }
         }
 
-         stages {
         stage ('Test Image') {
             steps {
                 dir("Teste"){
