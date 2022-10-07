@@ -19,7 +19,7 @@ pipeline {
         stage ('simple-tag') {
             steps {
                 dir("tag"){
-                    bat 'docker image tag api-produto:'${env.BUILD_ID}' lucius28/api-produto'
+                    bat 'docker image tag api-produto:${env.BUILD_ID} lucius28/api-produto'
                     echo 'Tag Realizada com sucesso'
                 }
             }
