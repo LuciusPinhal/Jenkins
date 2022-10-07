@@ -16,6 +16,18 @@ pipeline {
                 }
             }
         }
+        stage ('simple-build') {
+            steps {
+                dir("tag"){
+                    bat 'docker image tag api-produto lucius28/api-produtoPush'
+                    echo 'Tag Realizada com sucesso'
+                }
+                dir("push"){
+                    bat 'docker image push lucius28/api-produtoPush'
+                    echo 'Tag Realizada com sucesso'
+                }
+            }
+        }
         stage ('Push Image no docker Hub') {
             steps {
                 script {
