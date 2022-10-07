@@ -16,6 +16,15 @@ pipeline {
                 }
             }
         }
+
+        stage ('Test Run') {
+            steps {
+                dir("run"){
+                    bat 'docker container run -p 80:80 api-produto'
+                    echo 'Teste realizado com sucesso'
+                }
+            }
+        }
         // stage ('simple-tag') {
         //     steps {
         //         dir("tag"){
