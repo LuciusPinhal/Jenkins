@@ -1,37 +1,38 @@
 pipeline {
     agent any
 
-    stages {
-        stage ('Build Image') {
-            steps {
-                script {
-                    dockerapp = docker.build("fabricioveronez/api-produto:${env.BUILD_ID}", '-f ./src/Dockerfile ./src') 
-                }                
-            }
-        }
+   environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-cred-raja')
+	}
 
-        stage ('Push Image') {
-            steps {
-                script {
-                    docker tag firstimage YOUR_DOCKERHUB_NAME/firstimage
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerapp.push('latest')
-                        dockerapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
+	stages {
 
-        // stage ('Deploy Kubernetes') {
-        //     environment {
-        //         tag_version = "${env.BUILD_ID}"
-        //     }
-        //     steps {
-        //         withKubeConfig([credentialsId: 'kubeconfig']) {
-        //             sh 'sed -i "s/{{tag}}/$tag_version/g" ./k8s/deployment.yaml'
-        //             sh 'kubectl apply -f ./k8s/deployment.yaml'
-        //         }
-        //     }
-        // }
-    }
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t bharathirajatut/nodeapp:latest .'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push bharathirajatut/nodeapp:latest'
+			}
+		}
+	}
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+
 }
